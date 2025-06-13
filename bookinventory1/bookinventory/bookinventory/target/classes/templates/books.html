@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Books List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        a.button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        a.button:hover {
+            background-color: #0056b3;
+        }
+
+        .actions a {
+            margin-right: 0.5rem;
+        }
+		.search-container {
+		        display: flex;
+		        justify-content: center;
+		        margin-bottom: 20px;
+		    }
+
+		    .search-box {
+		        display: flex;
+		        border: 1px solid #ccc;
+		        border-radius: 25px;
+		        overflow: hidden;
+		        max-width: 400px;
+		        width: 100%;
+		    }
+
+		    .search-box input[type="text"] {
+		        border: none;
+		        padding: 10px 15px;
+		        flex: 1;
+		        font-size: 16px;
+		        outline: none;
+		    }
+
+		    .search-box button {
+		        background-color: #4CAF50;
+		        color: white;
+		        border: none;
+		        padding: 10px 20px;
+		        cursor: pointer;
+		        font-weight: bold;
+		        transition: background-color 0.3s;
+		    }
+
+		    .search-box button:hover {
+		        background-color: #45a049;
+		    }
+    </style>
+</head>
+<body>
+    <h2>Book Inventory</h2>
+    <a th:href="@{/book/add}" class="button">Add New Book</a>
+	
+	<div class="search-container">
+	    <form class="search-box" action="/books/search" method="get">
+	        <input type="text" name="keyword" placeholder="🔍 Search books by title, author, or genre..." required />
+	        <button type="submit">Search</button>
+	    </form>
+	</div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th><th>Title</th><th>Author</th><th>Genre</th><th>Available</th><th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.genre}"></td>
+            <td th:text="${book.available ? 'Yes' : 'No'}"></td>
+            <td class="actions">
+                <a th:href="@{/book/edit/{id}(id=${book.id})}" class="button">Edit</a>
+                <a th:href="@{/book/delete/{id}(id=${book.id})}" class="button" 
+                   style="background-color: #dc3545;">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

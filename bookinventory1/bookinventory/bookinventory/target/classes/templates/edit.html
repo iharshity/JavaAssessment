@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${book.id == null ? 'Add New Book' : 'Edit Book'}"></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: #f1f1f1;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            max-width: 400px;
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="checkbox"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        input[type="submit"] {
+            margin-top: 1rem;
+            background-color: #28a745;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2 th:text="${book.id != null} ? 'Edit Book' : 'Add Book'"></h2>
+    <form th:action="@{${book.id != null} ? '/book/update/' + ${book.id} : '/book'}"
+          th:object="${book}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+
+        <label>Title:</label>
+        <input type="text" th:field="*{title}" required/><br/>
+
+        <label>Author:</label>
+        <input type="text" th:field="*{author}" required/><br/>
+
+        <label>Genre:</label>
+        <input type="text" th:field="*{genre}" required/><br/>
+
+        <label>Available:</label>
+        <input type="checkbox" th:field="*{available}"/><br/>
+
+        <button type="submit">Save</button>
+    </form>
+    <a href="/books">Back to List</a>
+</body>
+</html>
